@@ -56,7 +56,7 @@
         <div>
             <h2 th:text="${route.name}"></h2>
             <p th:text="${route.description}"></p>
-            <a href="/" class="btn">Learn More</a>
+            <a th:href="@{'/routes/details/' + ${route.id}}" class="btn">Learn More</a>
         </div>
     </section>
 </div>

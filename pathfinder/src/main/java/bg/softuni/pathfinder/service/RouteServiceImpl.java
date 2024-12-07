@@ -1,5 +1,6 @@
 package bg.softuni.pathfinder.service;
 
+import bg.softuni.pathfinder.dtos.route.RouteDetailsDTO;
 import bg.softuni.pathfinder.dtos.route.RouteShortInfoDTO;
 import bg.softuni.pathfinder.model.entity.Picture;
 import bg.softuni.pathfinder.model.entity.Route;
@@ -32,11 +33,37 @@ public class RouteServiceImpl implements RouteService {
                 .collect(Collectors.toList());
     }
 
-    private RouteShortInfoDTO mapToShortInfoDTO(Route route) {
-        String pictureUrl = pictureRepository.findFirstByRouteId(route.getId())
+    @Override
+    public RouteDetailsDTO getRouteDetailsById(Long routeId) {
+        Route route = routeRepository.findById(routeId)
+                .orElseThrow(() -> new IllegalArgumentException("Route not found for ID: " + routeId));
+
+        String pictureUrl = pictureRepository.findFirstByRouteId(routeId)
                 .map(Picture::getUrl)
                 .orElse(null);
 
-        return new RouteShortInfoDTO(route.getName(), route.getDescription(), pictureUrl);
+        RouteDetailsDTO detailsDTO = modelMapper.map(route, RouteDetailsDTO.class);
+
+        detailsDTO.setPictureUrl(pictureUrl);
+        detailsDTO.setTotalDistance(22.257);
+
+        return detailsDTO;
+    }
+
+
+    private RouteShortInfoDTO mapToShortInfoDTO(Route route) {
+        String pictureUrl = getPictureUrl(route);
+
+        RouteShortInfoDTO shortInfoDTO = modelMapper.map(route, RouteShortInfoDTO.class);
+
+        shortInfoDTO.setPictureUrl(pictureUrl);
+
+        return shortInfoDTO;
+    }
+
+    private String getPictureUrl(Route route) {
+        return this.pictureRepository.findFirstByRouteId(route.getId())
+                .map(Picture::getUrl)
+                .orElse(null);
     }
 }
