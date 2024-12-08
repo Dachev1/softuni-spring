@@ -1,4 +1,4 @@
-package bg.softuni.pathfinder.service;
+package bg.softuni.pathfinder.service.impl;
 
 import bg.softuni.pathfinder.dtos.route.RouteDetailsDTO;
 import bg.softuni.pathfinder.dtos.route.RouteShortInfoDTO;
@@ -6,6 +6,7 @@ import bg.softuni.pathfinder.model.entity.Picture;
 import bg.softuni.pathfinder.model.entity.Route;
 import bg.softuni.pathfinder.repository.PictureRepository;
 import bg.softuni.pathfinder.repository.RouteRepository;
+import bg.softuni.pathfinder.service.RouteService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
