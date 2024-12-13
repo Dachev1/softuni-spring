@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Offer Details</title>
+    <link rel="stylesheet" href="/css/reset-css.css"/>
+    <link rel="stylesheet" href="/css/bootstrap.min.css"/>
+</head>
+<body>
+<div class="container">
+    <h2>Offer Details</h2>
+    <div>
+        <img th:src="${offerDetails.imageUrl}" alt="Offer Image">
+        <p>Model: <span th:text="${offerDetails.model}"></span></p>
+        <p>Price: <span th:text="${offerDetails.price}"></span></p>
+        <p>Engine: <span th:text="${offerDetails.engine}"></span></p>
+        <p>Transmission: <span th:text="${offerDetails.transmission}"></span></p>
+        <p>Year: <span th:text="${offerDetails.year}"></span></p>
+        <p>Mileage: <span th:text="${offerDetails.mileage}"></span></p>
+        <p>Description: <span th:text="${offerDetails.description}"></span></p>
+    </div>
+</div>
+</body>
+</html>
