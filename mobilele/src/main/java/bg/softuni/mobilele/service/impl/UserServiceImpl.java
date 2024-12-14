@@ -25,6 +25,8 @@ public class UserServiceImpl implements UserService {
     public void registerUser(RegistrationDTO registrationDTO) {
         User user = new User();
         user.setUsername(registrationDTO.username());
+        user.setFirstName(registrationDTO.firstName());
+        user.setLastName(registrationDTO.lastName());
         user.setPassword(passwordEncoder.encode(registrationDTO.password()));
         user.setActive(true);
         user.setCreated(LocalDateTime.now());
@@ -33,9 +35,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean validateUser(LoginDTO loginDTO) {
+    public User validateAndGetUser(LoginDTO loginDTO) {
         return userRepository.findByUsername(loginDTO.username())
-                .map(user -> passwordEncoder.matches(loginDTO.password(), user.getPassword()))
-                .orElse(false);
+                .filter(user -> passwordEncoder.matches(loginDTO.password(), user.getPassword()))
+                .orElse(null);
     }
 }

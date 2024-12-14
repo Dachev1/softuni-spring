@@ -1,6 +1,7 @@
 package bg.softuni.mobilele.web.user;
 
 import bg.softuni.mobilele.model.dtos.user.LoginDTO;
+import bg.softuni.mobilele.model.entity.User;
 import bg.softuni.mobilele.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -32,17 +33,25 @@ public class LoginController {
     public String login(
             @Valid @ModelAttribute LoginDTO loginDTO,
             BindingResult bindingResult,
-            HttpSession session) {
+            HttpSession session,
+            Model model) {
         if (bindingResult.hasErrors()) {
             return "auth-login";
         }
 
-        if (userService.validateUser(loginDTO)) {
-            session.setAttribute("user", loginDTO.username());
-            return "redirect:/home";
+        User user = userService.validateAndGetUser(loginDTO);
+        if (user != null) {
+            session.setAttribute("user", user);
+            return "redirect:/";
         }
 
         bindingResult.rejectValue("password", "invalid.credentials", "Invalid username or password");
         return "auth-login";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
     }
 }

@@ -11,15 +11,18 @@
 </head>
 <body>
 
-<div th:replace="fragments/navbar.html::navbar('home')"></div>
+    <div th:replace="fragments/navbar.html::navbar('home')"></div>
 
-<div class="container-fluid">
-    <h5 class="text-center text-white mt-5">Welcome to MobiLeLeLe</h5>
-</div>
-
-<div>
-    <footer> </footer>
-</div>
+    <div class="container-fluid">
+        <h5 class="text-center text-white mt-5">
+        <span th:if="${session.user != null}">
+            Welcome, <span th:text="${session.user.firstName}"></span> <span th:text="${session.user.lastName}"></span>
+        </span>
+            <span th:if="${session.user == null}">
+            Welcome to MobiLeLeLe
+        </span>
+        </h5>
+    </div>
 
 </body>
 </html>
