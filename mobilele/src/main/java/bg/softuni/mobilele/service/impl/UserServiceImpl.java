@@ -23,14 +23,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerUser(RegistrationDTO registrationDTO) {
-        User user = new User();
-        user.setUsername(registrationDTO.username());
-        user.setFirstName(registrationDTO.firstName());
-        user.setLastName(registrationDTO.lastName());
-        user.setPassword(passwordEncoder.encode(registrationDTO.password()));
-        user.setActive(true);
-        user.setCreated(LocalDateTime.now());
-        user.setModified(LocalDateTime.now());
+        User user = map(registrationDTO);
         userRepository.save(user);
     }
 
@@ -39,5 +32,17 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByUsername(loginDTO.username())
                 .filter(user -> passwordEncoder.matches(loginDTO.password(), user.getPassword()))
                 .orElse(null);
+    }
+
+    private User map(RegistrationDTO registrationDTO) {
+        User user = new User();
+        user.setUsername(registrationDTO.username());
+        user.setFirstName(registrationDTO.firstName());
+        user.setLastName(registrationDTO.lastName());
+        user.setPassword(passwordEncoder.encode(registrationDTO.password()));
+        user.setActive(true);
+        user.setCreated(LocalDateTime.now());
+        user.setModified(LocalDateTime.now());
+        return user;
     }
 }

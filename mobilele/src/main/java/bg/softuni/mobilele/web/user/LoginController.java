@@ -33,8 +33,7 @@ public class LoginController {
     public String login(
             @Valid @ModelAttribute LoginDTO loginDTO,
             BindingResult bindingResult,
-            HttpSession session,
-            Model model) {
+            HttpSession session) {
         if (bindingResult.hasErrors()) {
             return "auth-login";
         }

@@ -32,6 +32,7 @@ public class RegisterController {
         if (bindingResult.hasErrors()) {
             return "auth-register";
         }
+        
         userService.registerUser(registrationDTO);
         return "redirect:/users/login";
     }
