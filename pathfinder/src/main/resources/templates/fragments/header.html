@@ -1,0 +1,21 @@
+<header>
+    <nav class="main-nav">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/about">About</a></li>
+
+            <!-- Show when not logged in -->
+            <li th:if="${!isLoggedIn}"><a href="/users/login">Login</a></li>
+            <li th:if="${!isLoggedIn}"><a href="/users/register">Register</a></li>
+
+            <!-- Show when logged in -->
+            <li th:if="${isLoggedIn}"><a href="/users/profile">Profile</a></li>
+            <li th:if="${isLoggedIn}"><a href="/users/logout">Logout</a></li>
+
+            <!-- Show only for admins -->
+            <li th:if="${isLoggedIn and #authorization.expression('hasRole(''ADMIN'')')}">
+                <a href="/admin">Admin</a>
+            </li>
+        </ul>
+    </nav>
+</header>

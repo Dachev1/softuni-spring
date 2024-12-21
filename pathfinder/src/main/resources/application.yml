@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: "jdbc:mysql://localhost:3306/pathfinder_db?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC"
+    url: jdbc:mysql://localhost:3306/pathfinder_db?useSSL=false&createDatabaseIfNotExist=true&serverTimezone=UTC&allowPublicKeyRetrieval=true
     username: root
     password: root
     hikari:
@@ -29,7 +29,6 @@ spring:
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: update
-
     open-in-view: false
     properties:
       hibernate:

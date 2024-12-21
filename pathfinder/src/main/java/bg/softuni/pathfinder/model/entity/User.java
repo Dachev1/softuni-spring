@@ -31,7 +31,7 @@ public class User implements Serializable {
     @Enumerated(EnumType.STRING)
     private Level level;
 
-    @ManyToMany()
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Role> roles;
 
     public User() {
