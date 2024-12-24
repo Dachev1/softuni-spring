@@ -1,4 +1,4 @@
-\<!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,69 +15,73 @@
 
 <div class="container">
     <h2 class="text-center text-white">Upload Offer</h2>
-    <form method="POST" th:action="@{/offers/add}" th:object="${newOfferDTO}"
+    <form method="POST"
+          th:action="${isEdit} ? @{/offers/update/{id}(id=${newOfferDTO.id})} : @{/offers/add}"
+          th:object="${newOfferDTO}"
           class="main-form mx-auto col-md-8 d-flex flex-column justify-content-center">
+
+        <!-- Hidden input for offer ID -->
+        <input type="hidden" th:field="*{id}" />
+
         <div class="row">
             <div class="form-group col-md-6 mb-3">
-                <label class="text-center text-white font-weight-bold" for="model">Model ID</label>
+                <label for="model" class="text-white font-weight-bold">Model ID</label>
                 <input id="model" type="text" th:field="*{model}" class="form-control" placeholder="Enter Model ID">
-                <p th:if="${#fields.hasErrors('model')}" th:errors="*{model}" class="errors alert alert-danger"></p>
+                <p th:if="${#fields.hasErrors('model')}" th:errors="*{model}" class="alert alert-danger"></p>
             </div>
             <div class="form-group col-md-6 mb-3">
                 <label for="price" class="text-white font-weight-bold">Price</label>
                 <input id="price" type="number" th:field="*{price}" class="form-control" placeholder="Suggested price">
-                <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="errors alert alert-danger"></p>
+                <p th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="alert alert-danger"></p>
             </div>
         </div>
+
         <div class="row">
             <div class="form-group col-md-6 mb-3">
-                <label class="text-center text-white font-weight-bold" for="engine">Engine</label>
+                <label for="engine" class="text-white font-weight-bold">Engine</label>
                 <select id="engine" th:field="*{engine}" class="form-control">
                     <option value="">- Select engine type -</option>
-                    <option th:each="engineType : ${engineTypes}" th:value="${engineType}"
-                            th:text="${engineType}"></option>
+                    <option th:each="engineType : ${engineTypes}" th:value="${engineType}" th:text="${engineType}"></option>
                 </select>
-                <p th:if="${#fields.hasErrors('engine')}" th:errors="*{engine}" class="errors alert alert-danger"></p>
+                <p th:if="${#fields.hasErrors('engine')}" th:errors="*{engine}" class="alert alert-danger"></p>
             </div>
             <div class="form-group col-md-6 mb-3">
-                <label class="text-center text-white font-weight-bold" for="transmission">Transmission</label>
+                <label for="transmission" class="text-white font-weight-bold">Transmission</label>
                 <select id="transmission" th:field="*{transmission}" class="form-control">
                     <option value="">- Select transmission type -</option>
-                    <option th:each="transmissionType : ${transmissionTypes}" th:value="${transmissionType}"
-                            th:text="${transmissionType}"></option>
+                    <option th:each="transmissionType : ${transmissionTypes}" th:value="${transmissionType}" th:text="${transmissionType}"></option>
                 </select>
-                <p th:if="${#fields.hasErrors('transmission')}" th:errors="*{transmission}"
-                   class="errors alert alert-danger"></p>
+                <p th:if="${#fields.hasErrors('transmission')}" th:errors="*{transmission}" class="alert alert-danger"></p>
             </div>
         </div>
+
         <div class="row">
             <div class="form-group col-md-6 mb-3">
                 <label for="year" class="text-white font-weight-bold">Year</label>
                 <input id="year" type="number" th:field="*{year}" class="form-control" placeholder="Manufacturing year">
-                <p th:if="${#fields.hasErrors('year')}" th:errors="*{year}" class="errors alert alert-danger"></p>
+                <p th:if="${#fields.hasErrors('year')}" th:errors="*{year}" class="alert alert-danger"></p>
             </div>
             <div class="form-group col-md-6 mb-3">
                 <label for="mileage" class="text-white font-weight-bold">Mileage</label>
-                <input id="mileage" type="number" th:field="*{mileage}" class="form-control"
-                       placeholder="Mileage in kilometers">
-                <p th:if="${#fields.hasErrors('mileage')}" th:errors="*{mileage}" class="errors alert alert-danger"></p>
+                <input id="mileage" type="number" th:field="*{mileage}" class="form-control" placeholder="Mileage in kilometers">
+                <p th:if="${#fields.hasErrors('mileage')}" th:errors="*{mileage}" class="alert alert-danger"></p>
             </div>
         </div>
+
         <div class="form-group">
-            <label class="text-white font-weight-bold" for="description">Description</label>
-            <textarea id="description" th:field="*{description}" class="form-control" rows="3" placeholder="Description"
-                      required></textarea>
-            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}"
-               class="errors alert alert-danger"></p>
+            <label for="description" class="text-white font-weight-bold">Description</label>
+            <textarea id="description" th:field="*{description}" class="form-control" rows="3" placeholder="Description"></textarea>
+            <p th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="alert alert-danger"></p>
         </div>
+
         <div class="form-group">
-            <label class="text-white font-weight-bold" for="imageUrl">Image URL</label>
-            <input id="imageUrl" type="url" th:field="*{imageUrl}" class="form-control"
-                   placeholder="Put vehicle image URL here">
-            <p th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}" class="errors alert alert-danger"></p>
+            <label for="imageUrl" class="text-white font-weight-bold">Image URL</label>
+            <input id="imageUrl" type="url" th:field="*{imageUrl}" class="form-control" placeholder="Vehicle image URL">
+            <p th:if="${#fields.hasErrors('imageUrl')}" th:errors="*{imageUrl}" class="alert alert-danger"></p>
         </div>
+
         <div class="button-holder d-flex">
-            <input type="submit" class="btn btn-info btn-lg" value="Submit Offer"/>
+            <input type="submit" class="btn btn-info btn-lg" th:value="${isEdit} ? 'Update Offer' : 'Submit Offer'" />
         </div>
     </form>
 </div>

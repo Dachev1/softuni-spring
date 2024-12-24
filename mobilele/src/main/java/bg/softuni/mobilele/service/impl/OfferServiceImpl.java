@@ -80,12 +80,13 @@ public class OfferServiceImpl implements OfferService {
         return modelMapper.map(offer, NewOfferDTO.class);
     }
 
+    @Override
     public void updateOffer(UUID id, NewOfferDTO updatedOfferDTO) {
         Offer existingOffer = offerRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Offer not found!"));
 
         // Update fields
-//        existingOffer.setModel(updatedOfferDTO.getModel());
+        // existingOffer.setModel(updatedOfferDTO.getModel());
         existingOffer.setPrice(updatedOfferDTO.getPrice());
         existingOffer.setEngine(updatedOfferDTO.getEngine());
         existingOffer.setTransmission(updatedOfferDTO.getTransmission());
@@ -93,6 +94,7 @@ public class OfferServiceImpl implements OfferService {
         existingOffer.setMileage(updatedOfferDTO.getMileage());
         existingOffer.setDescription(updatedOfferDTO.getDescription());
         existingOffer.setImageUrl(updatedOfferDTO.getImageUrl());
+        existingOffer.setModified(LocalDateTime.now());
 
         offerRepository.save(existingOffer);
     }

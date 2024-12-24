@@ -24,9 +24,11 @@ public class OfferController {
 
     @GetMapping("/add")
     public String addOfferForm(Model model) {
-        model.addAttribute("newOfferDTO", new NewOfferDTO());
+        NewOfferDTO newOfferDTO = new NewOfferDTO();
+        model.addAttribute("newOfferDTO", newOfferDTO);
         model.addAttribute("engineTypes", offerService.getAllEngineTypes());
         model.addAttribute("transmissionTypes", offerService.getAllTransmissionTypes());
+        model.addAttribute("isEdit", false);
         return "offer-add";
     }
 
@@ -36,10 +38,35 @@ public class OfferController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("engineTypes", offerService.getAllEngineTypes());
             model.addAttribute("transmissionTypes", offerService.getAllTransmissionTypes());
+            model.addAttribute("isEdit", false);
             return "offer-add";
         }
         UUID createdOfferId = offerService.addOffer(newOfferDTO);
         return "redirect:/offers/details/" + createdOfferId;
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editOfferForm(@PathVariable UUID id, Model model) {
+        NewOfferDTO offerToEdit = offerService.getOfferDetailsForEdit(id);
+        model.addAttribute("newOfferDTO", offerToEdit);
+        model.addAttribute("engineTypes", offerService.getAllEngineTypes());
+        model.addAttribute("transmissionTypes", offerService.getAllTransmissionTypes());
+        model.addAttribute("isEdit", true);
+        return "offer-add";
+    }
+
+    @PostMapping("/update/{id}")
+    public String updateOffer(@PathVariable UUID id,
+                              @Valid @ModelAttribute("newOfferDTO") NewOfferDTO newOfferDTO,
+                              BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("engineTypes", offerService.getAllEngineTypes());
+            model.addAttribute("transmissionTypes", offerService.getAllTransmissionTypes());
+            model.addAttribute("isEdit", true);
+            return "offer-add";
+        }
+        offerService.updateOffer(id, newOfferDTO);
+        return "redirect:/offers/details/" + id;
     }
 
     @GetMapping("/details/{id}")
@@ -60,27 +87,5 @@ public class OfferController {
     public String deleteOffer(@PathVariable UUID id) {
         offerService.deleteOfferById(id);
         return "redirect:/offers/all";
-    }
-
-    @GetMapping("/edit/{id}")
-    public String editOffer(@PathVariable UUID id, Model model) {
-        NewOfferDTO offer = offerService.getOfferDetailsForEdit(id);
-        model.addAttribute("newOfferDTO", offer);
-        model.addAttribute("engineTypes", offerService.getAllEngineTypes());
-        model.addAttribute("transmissionTypes", offerService.getAllTransmissionTypes());
-        return "offer-add";
-    }
-
-    @PostMapping("/edit/{id}")
-    public String updateOffer(@PathVariable UUID id,
-                              @Valid @ModelAttribute("newOfferDTO") NewOfferDTO updatedOffer,
-                              BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("engineTypes", offerService.getAllEngineTypes());
-            model.addAttribute("transmissionTypes", offerService.getAllTransmissionTypes());
-            return "offer-add";
-        }
-        offerService.updateOffer(id, updatedOffer);
-        return "redirect:/offers/details/" + id;
     }
 }

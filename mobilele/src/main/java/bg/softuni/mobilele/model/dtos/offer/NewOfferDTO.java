@@ -4,7 +4,11 @@ import bg.softuni.mobilele.model.enums.EngineType;
 import bg.softuni.mobilele.model.enums.TransmissionType;
 import jakarta.validation.constraints.*;
 
+import java.util.UUID;
+
 public class NewOfferDTO {
+
+    private UUID id;
 
     @NotBlank
     private String model;
@@ -31,7 +35,14 @@ public class NewOfferDTO {
     @Pattern(regexp = "(http(s?):)([/|.|\\w|\\s|-])*\\.(?:jpg|jpeg|png)")
     private String imageUrl;
 
-    // Getters and Setters
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
     public String getModel() {
         return model;
     }
