@@ -15,10 +15,15 @@ spring:
     hibernate:
       ddl-auto: update
 
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
 # Logging Levels
-logging:
-  level:
-    org: INFO
-    blog: INFO
-    org.hibernate.SQL: DEBUG
-    org.hibernate.type.descriptor: TRACE
+#logging:
+#  level:
+#    org: INFO
+#    blog: INFO
+#    org.hibernate.SQL: DEBUG
+#    org.hibernate.type.descriptor: TRACE

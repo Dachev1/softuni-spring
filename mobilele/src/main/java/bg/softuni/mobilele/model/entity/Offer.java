@@ -39,14 +39,6 @@ public class Offer extends BaseEntity {
     @Column(nullable = false)
     private LocalDateTime modified;
 
-//    @ManyToOne
-//    @JoinColumn(name = "model_id", nullable = false)
-//    private Model model;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "seller_id", nullable = false)
-//    private User seller;
-
     public String getDescription() {
         return description;
     }
@@ -118,6 +110,14 @@ public class Offer extends BaseEntity {
     public void setModified(LocalDateTime modified) {
         this.modified = modified;
     }
+
+    //    @ManyToOne
+//    @JoinColumn(name = "model_id", nullable = false)
+//    private Model model;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "seller_id", nullable = false)
+//    private User seller;
 
 //    public Model getModel() {
 //        return model;
