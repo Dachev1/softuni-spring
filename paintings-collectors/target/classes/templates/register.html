@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<body>
+<header th:replace="fragments/commons::nav"></header>
+<main>
+
+    <form class="welcome login" th:action="@{/users/register}" th:object="${userData}" method="post">
+        <h1 class="text-center mt-2">
+            <span class="badge badge-pill badge-dark">Register</span>
+        </h1>
+
+        <!-- Username -->
+        <div class="form-group">
+            <div class="label-holder textCol d-flex justify-content-center">
+                <label for="username" class="h4 mb-2 text-white">Username</label>
+            </div>
+            <input type="text" class="form-control" id="username" th:field="*{username}" />
+            <small class="danger text-white" style="font-size: 15px" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></small>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="email" class="h4 mb-2">Email</label>
+            </div>
+            <input type="email" class="form-control" id="email" th:field="*{email}" />
+            <small class="danger text-white" style="font-size: 15px" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+        </div>
+
+        <!-- Password -->
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="password" class="h4 mb-2">Password</label>
+            </div>
+            <input type="password" class="form-control" id="password" th:field="*{password}" />
+            <small class="danger text-white" style="font-size: 15px" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></small>
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="form-group">
+            <div class="label-holder text-white textCol d-flex justify-content-center">
+                <label for="confirmPassword" class="h4 mb-2">Confirm Password</label>
+            </div>
+            <input type="password" class="form-control" id="confirmPassword" th:field="*{confirmPassword}" />
+            <small class="danger text-white" style="font-size: 15px" th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"></small>
+            <small class="danger text-white" style="font-size: 15px" th:if="${passwordMismatch != null}" th:text="${passwordMismatch}"></small>
+        </div>
+
+        <!-- Register Button -->
+        <div class="button-holder d-flex justify-content-center">
+            <button type="submit" class="btn btn-primary">Register</button>
+        </div>
+
+    </form>
+</main>
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package com.paintingscollectors.controller.user;
 
+import com.paintingscollectors.config.UserSession;
 import com.paintingscollectors.model.dto.UserRegisterDTO;
 import com.paintingscollectors.service.UserService;
 import jakarta.validation.Valid;
@@ -16,9 +17,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserRegisterController {
 
     private final UserService userService;
+    private final UserSession userSession;
 
-    public UserRegisterController(UserService userService) {
+    public UserRegisterController(UserService userService, UserSession userSession) {
         this.userService = userService;
+        this.userSession = userSession;
     }
 
     @ModelAttribute("userData")
@@ -28,6 +31,9 @@ public class UserRegisterController {
 
     @GetMapping("/register")
     public String register() {
+        if (userSession.isLoggedIn()) {
+            return "redirect:/home";
+        }
         return "register";
     }
 
@@ -35,7 +41,6 @@ public class UserRegisterController {
     public String doRegister(@Valid @ModelAttribute("userData") UserRegisterDTO userData,
                              BindingResult bindingResult,
                              RedirectAttributes redirectAttributes) {
-
         if (bindingResult.hasErrors()) {
             redirectAttributes.addFlashAttribute("userData", userData);
             redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.userData", bindingResult);
