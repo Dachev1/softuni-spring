@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/paintings")
@@ -59,8 +60,13 @@ public class PaintingController {
     }
 
     @PostMapping("/vote/{id}")
-    public String voteForPainting(@PathVariable Long id) {
-        paintingService.voteForPainting(id, userSession.getCurrentUser());
+    public String voteForPainting(@PathVariable Long id, RedirectAttributes redirectAttributes) {
+        try {
+            paintingService.voteForPainting(id, userSession.getCurrentUser());
+            redirectAttributes.addFlashAttribute("successMessage", "Vote successfully cast!");
+        } catch (IllegalStateException e) {
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+        }
         return "redirect:/home";
     }
 

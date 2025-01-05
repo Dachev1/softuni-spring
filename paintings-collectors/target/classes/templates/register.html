@@ -26,6 +26,7 @@
             </div>
             <input type="email" class="form-control" id="email" th:field="*{email}" />
             <small class="danger text-white" style="font-size: 15px" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small>
+            <small class="danger text-white" style="font-size: 15px" th:if="${emailInvalid != null}" th:text="${emailInvalid}"></small>
         </div>
 
         <!-- Password -->

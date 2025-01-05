@@ -9,4 +9,6 @@ public interface UserService {
     boolean authenticate(UserLoginDTO userLoginDTO);
 
     void logout();
+
+    boolean doesEmailExist(String email);
 }

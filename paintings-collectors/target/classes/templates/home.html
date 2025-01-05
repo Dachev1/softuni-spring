@@ -71,16 +71,17 @@
             <div class="col-6 mt-1 mb-1">
                 <div class="home-fields overflow-auto" style="height: 58vh;">
                     <h3 class="my-paintings">Other Paintings</h3>
-                    <ul class="list-group">
-                        <li class="list-group-item d-flex align-items-center" th:each="o : ${otherPaintings}">
-                            <img th:src="${o.imageUrl}" th:alt="${o.name}" width="75" height="75" class="me-3 rounded">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item bg-dark text-white d-flex align-items-start rounded mb-4 py-3 shadow-sm"
+                            th:each="o : ${otherPaintings}">
+                            <img th:src="${o.imageUrl}" th:alt="${o.name}" width="100" height="100" class="me-4 rounded">
                             <div class="flex-grow-1">
-                                <h6 class="fw-bold mb-1" th:text="${o.name}"></h6>
-                                <p class="mb-1">by <span th:text="${o.author}"></span></p>
-                                <p class="mb-1">Style: <span th:text="${o.style.styleName}"></span></p>
-                                <p class="text-muted small">Added by <span th:text="${o.owner.username}"></span></p>
+                                <h5 class="fw-bold mb-2 text-primary" th:text="${o.name}"></h5>
+                                <p class="mb-2">by <span class="text-warning" th:text="${o.author}"></span></p>
+                                <p class="mb-2 text-muted">Style: <span th:text="${o.style.styleName}"></span></p>
+                                <p class="text-muted small mb-0">Added by <span th:text="${o.owner.username}"></span></p>
                             </div>
-                            <div class="d-flex align-items-center gap-2">
+                            <div class="d-flex flex-column align-items-center gap-3 ms-auto">
                                 <form th:if="${!o.isFavorite}" th:action="@{/paintings/add-favorites/{id}(id=${o.id})}" method="post">
                                     <button type="submit" class="btn btn-info btn-sm">Favorite</button>
                                 </form>
@@ -92,12 +93,14 @@
                         </li>
                     </ul>
                 </div>
+
                 <!-- Most Rated Paintings Section -->
-                <div class="home-fields overflow-auto mt-3" style="height: 21vh;">
-                    <h3 class="my-paintings">Most Rated Paintings</h3>
+                <div class="home-fields overflow-auto mt-3 p-3 bg-light rounded shadow">
+                    <h3 class="my-paintings text-dark">Most Rated Paintings</h3>
                     <ul class="list-group">
-                        <li class="list-group-item" th:each="r : ${mostRatedPaintings}">
-                            <h6 class="fw-bold mb-1" th:text="${r.name} + ' by ' + ${r.author}"></h6>
+                        <li class="list-group-item bg-dark text-white mb-2 rounded"
+                            th:each="r : ${mostRatedPaintings}">
+                            <h6 class="fw-bold mb-1 text-success" th:text="${r.name} + ' by ' + ${r.author}"></h6>
                             <p class="mb-0">Votes: <span th:text="${r.votes}"></span></p>
                         </li>
                     </ul>

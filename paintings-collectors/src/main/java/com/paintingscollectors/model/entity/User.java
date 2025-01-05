@@ -41,13 +41,8 @@ public class User {
     )
     private Set<Painting> ratedPaintings;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_voted_paintings",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "painting_id")
-    )
-    private Set<Painting> votedPaintings = new HashSet<>();
+    @ManyToMany(mappedBy = "voters")
+    private Set<Painting> votedPaintings;
 
     public User() {
         this.paintings = new HashSet<>();

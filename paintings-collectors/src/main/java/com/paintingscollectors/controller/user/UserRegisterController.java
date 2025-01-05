@@ -53,6 +53,12 @@ public class UserRegisterController {
             return "redirect:/users/register";
         }
 
+        if(userService.doesEmailExist(userData.getEmail())) {
+            redirectAttributes.addFlashAttribute("userData", userData);
+            redirectAttributes.addFlashAttribute("emailInvalid", "The email address is already in use!");
+            return "redirect:/users/register";
+        }
+
         userService.register(userData);
         return "redirect:/users/login";
     }

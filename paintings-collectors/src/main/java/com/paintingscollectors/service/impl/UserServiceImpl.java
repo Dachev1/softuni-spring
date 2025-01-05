@@ -47,4 +47,9 @@ public class UserServiceImpl implements UserService {
     public void logout() {
         userSession.clear();
     }
+
+    @Override
+    public boolean doesEmailExist(String email) {
+        return userRepository.existsByEmail(email);
+    }
 }

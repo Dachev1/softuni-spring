@@ -83,13 +83,17 @@ public class PaintingServiceImpl implements PaintingService {
     public void voteForPainting(Long paintingId, User user) {
         Painting painting = paintingRepository.findById(paintingId)
                 .orElseThrow(() -> new IllegalArgumentException("Painting not found"));
-        if (!painting.getVoters().contains(user)) {
-            painting.getVoters().add(user);
-            painting.setVotes(painting.getVotes() + 1);
-            painting.setHasUserVoted(true);
-            paintingRepository.save(painting);
+
+        if (painting.getVoters().contains(user)) {
+            throw new IllegalStateException("You have already voted for this painting.");
         }
+
+        painting.getVoters().add(user);
+        painting.setVotes(painting.getVotes() + 1);
+
+        paintingRepository.save(painting);
     }
+
 
     @Override
     public boolean hasUserVoted(Long paintingId, User user) {

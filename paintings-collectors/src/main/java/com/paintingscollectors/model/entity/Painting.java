@@ -35,8 +35,14 @@ public class Painting {
     @Column(nullable = false)
     private int votes;
 
-    @ManyToMany(mappedBy = "votedPaintings")
+    @ManyToMany
+    @JoinTable(
+            name = "painting_voters",
+            joinColumns = @JoinColumn(name = "painting_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
     private Set<User> voters;
+
 
     @Transient
     private boolean hasUserVoted;
