@@ -25,5 +25,9 @@ public class UserSession {
     public boolean isLoggedIn() {
         return this.currentUser != null;
     }
+
+    public String username() {
+        return this.currentUser.getUsername();
+    }
 }
 

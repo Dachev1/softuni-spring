@@ -1,6 +1,8 @@
 package com.paintingscollectors.model.entity;
 
 import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "paintings")
@@ -24,14 +26,24 @@ public class Painting {
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
-    @Column(name = "image_url",nullable = false)
+    @Column(nullable = false)
     private String imageUrl;
 
-    @Column(name = "is_favorite",nullable = false)
+    @Column(nullable = false)
     private boolean isFavorite;
 
     @Column(nullable = false)
     private int votes;
+
+    @ManyToMany(mappedBy = "votedPaintings")
+    private Set<User> voters;
+
+    @Transient
+    private boolean hasUserVoted;
+
+    public Painting() {
+        this.voters = new HashSet<>();
+    }
 
     public Long getId() {
         return id;
@@ -95,6 +107,22 @@ public class Painting {
 
     public void setVotes(int votes) {
         this.votes = votes;
+    }
+
+    public Set<User> getVoters() {
+        return voters;
+    }
+
+    public void setVoters(Set<User> voters) {
+        this.voters = voters;
+    }
+
+    public boolean isHasUserVoted() {
+        return hasUserVoted;
+    }
+
+    public void setHasUserVoted(boolean hasUserVoted) {
+        this.hasUserVoted = hasUserVoted;
     }
 }
 

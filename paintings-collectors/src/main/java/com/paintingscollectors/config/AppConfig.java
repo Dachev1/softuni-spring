@@ -16,11 +16,6 @@ public class AppConfig {
     }
 
     @Bean
-    public Gson gson() {
-        return new Gson();
-    }
-
-    @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }

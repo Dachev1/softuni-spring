@@ -56,7 +56,8 @@ public class UserLoginController {
         return "redirect:/home";
     }
 
-    @PostMapping("/logout")
+    //@PostMapping is the right one, but for the task  I will use @GetMapping
+    @GetMapping("/logout")
     public String logout() {
         userSession.clear();
         return "redirect:/users/login";

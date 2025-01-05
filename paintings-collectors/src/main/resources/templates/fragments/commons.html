@@ -12,20 +12,21 @@
 <header>
     <nav>
         <div class="home">
-            <a href="/">Paintings Collectors App</a>
-            <a th:if="${currentUser != null}" href="/paintings/add">Add Painting</a>
+            <a th:href="@{/}">Paintings Collectors App</a>
+            <a th:if="${@userSession.isLoggedIn()}" href="/paintings/add">Add Painting</a>
         </div>
         <div class="links">
-            <li th:if="${currentUser == null}">
-                <a href="/users/login">Login</a>
+            <li th:unless="${@userSession.isLoggedIn()}">
+                <a th:href="@{/users/login}">Login</a>
             </li>
-            <li th:if="${currentUser == null}">
-                <a href="/users/register">Register</a>
+            <li th:unless="${@userSession.isLoggedIn()}">
+                <a th:href="@{/users/register}">Register</a>
             </li>
-            <li th:if="${currentUser != null}">
-                <form th:action="@{/users/logout}" method="post">
-                    <button type="submit" class="btn btn-link">Logout</button>
-                </form>
+            <li th:if="${@userSession.isLoggedIn()}">
+<!--                <form th:action="@{/users/logout}" method="post">-->
+<!--                    <button type="submit" class="btn btn-link">Logout</button>-->
+<!--                </form>-->
+                <a th:href="@{/users/logout}">Logout</a>
             </li>
         </div>
     </nav>

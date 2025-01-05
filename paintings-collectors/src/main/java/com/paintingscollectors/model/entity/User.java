@@ -41,10 +41,19 @@ public class User {
     )
     private Set<Painting> ratedPaintings;
 
+    @ManyToMany
+    @JoinTable(
+            name = "user_voted_paintings",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "painting_id")
+    )
+    private Set<Painting> votedPaintings = new HashSet<>();
+
     public User() {
         this.paintings = new HashSet<>();
         this.favoritePaintings = new HashSet<>();
         this.ratedPaintings = new HashSet<>();
+        this.votedPaintings = new HashSet<>();
     }
 
     public Long getId() {
@@ -101,5 +110,13 @@ public class User {
 
     public void setRatedPaintings(Set<Painting> ratedPaintings) {
         this.ratedPaintings = ratedPaintings;
+    }
+
+    public Set<Painting> getVotedPaintings() {
+        return votedPaintings;
+    }
+
+    public void setVotedPaintings(Set<Painting> votedPaintings) {
+        this.votedPaintings = votedPaintings;
     }
 }
